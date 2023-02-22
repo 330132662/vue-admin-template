@@ -1,4 +1,14 @@
-# vue-admin-template
+# 后台管理系统
+##### 基于 `vue-admin-template` 修改 ，对接 `fastadmin `
+
+1、权限菜单封装中  
+
+
+
+
+
+<br><br><br><br><br><br>
+   *************** 以下是原作者的内容  *************************** 
 
 > 这是一个极简的 vue admin 管理后台。它只包含了 Element UI & axios & iconfont & permission control & lint，这些搭建后台必要的东西。
 
