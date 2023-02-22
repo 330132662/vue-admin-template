@@ -26,7 +26,7 @@ module.exports = {
    */
   publicPath: process.env.VUE_APP_API_URL,
   outputDir: 'docs',
-  assetsDir: 'vue-admin-template/static',
+  assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
   devServer: {
