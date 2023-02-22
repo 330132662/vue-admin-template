@@ -2,6 +2,7 @@
 ##### 基于 `vue-admin-template`  修改 ，对接 `fastadmin `
 
 1、权限菜单封装中  
+2、pages 部署要点，需要在打包完的 `index.html` 里，给每个资源路径加 库的名称作为前缀 `vue-admin-template`，`static` 替换为`vue-admin-template/static`
 
 
 
