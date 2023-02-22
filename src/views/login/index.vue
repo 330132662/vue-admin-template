@@ -115,6 +115,7 @@ export default {
   },
   mounted() {
     var that = this;
+    console.log(process.env.VUE_APP_BASE_API)
     // this.getToken()
     //   .then((response) => {
     //     that.accessToken = response.data;
