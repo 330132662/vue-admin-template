@@ -1,5 +1,5 @@
 # 后台管理系统
-##### 基于 `vue-admin-template` 修改 ，对接 `fastadmin `
+##### 基于 `vue-admin-template`  修改 ，对接 `fastadmin `
 
 1、权限菜单封装中  
 
