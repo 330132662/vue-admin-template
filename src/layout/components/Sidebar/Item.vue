@@ -25,13 +25,13 @@ export default {
     }
 
     if (title) {
-      vnodes.push(<span slot='title'>{(title)}</span>)
+      vnodes.push(<span slot='title'>ab {(title)}</span>)
     }
     return vnodes
   }
 }
 </script>
-
+<!-- 侧边栏顶级菜单的item -->
 <style scoped>
 .sub-el-icon {
   color: currentColor;

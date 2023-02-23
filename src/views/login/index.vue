@@ -61,6 +61,10 @@
         <span style="margin-right: 20px">username: admin</span>
         <span> password: any</span>
       </div>
+      <div class="tips">
+        <span style="margin-right:18px;">Username : editor</span>
+        <span>Password : any</span>
+      </div>
     </el-form>
   </div>
 </template>
@@ -69,6 +73,7 @@
   import {validUsername} from "@/utils/validate";
   import request from "@/utils/request";
   import {MessageBox, Message} from "element-ui";
+  import {setToken} from "@/utils/auth";
 
   export default {
     name: "Login",
@@ -90,7 +95,7 @@
       return {
         accessToken: "",
         loginForm: {
-          username: "admin",
+          username: "editor",
           password: "888888",
         },
         loginRules: {
@@ -109,6 +114,7 @@
     watch: {
       $route: {
         handler: function (route) {
+          console.log(route);
           this.redirect = route.query && route.query.redirect;
         },
         immediate: true,
@@ -116,7 +122,7 @@
     },
     mounted() {
       var that = this;
-      console.log(process.env.VUE_APP_BASE_API)
+      console.log("当前环境host", process.env.VUE_APP_BASE_API)
       // this.getToken()
       //   .then((response) => {
       //     that.accessToken = response.data;
@@ -144,52 +150,72 @@
         });
       },
       handleLogin() {
-        this.loading = true;
-        var that = this;
-        this.$refs.loginForm.validate((valid) => {
+        setToken("临时token")
+        this.$refs.loginForm.validate(valid => {
+          //mock登录
           if (valid) {
-            return request({
-              url: "/index/vuelogin",
-              method: "post",
-              data: {
-                username: this.loginForm.username,
-                password: this.loginForm.password,
-                __token__: that.accessToken,
-              },
+            this.loading = true
+            this.$store.dispatch('user/login', this.loginForm).then(() => {
+              this.loading = false
+              this.$router.push({path: this.redirect || '/'})
+
+            }).catch(() => {
+              this.loading = false
             })
-              .then((response) => {
-                // console.warn("...", response);
-                if (response.code === 1) {
-                  Message({
-                    message: response.msg,
-                    type: "success",
-                    duration: 5 * 1000,
-                  });
-                  // that.$router.push({ path: "/" , query: this.otherQuery});
-                  console.log(this.redirect)
-                  this.$router.push({path: this.redirect || '/'})
-                } else {
-                  //  提示用户 错误信息
-                  Message({
-                    message: response.msg,
-                    type: "error",
-                    duration: 5 * 1000,
-                  });
-                }
-                this.loading = false;
-              })
-              .catch((err) => {
-                this.loading = false;
-
-                console.warn(err);
-              });
           } else {
-            this.loading = false;
-
-            console.log("error submit!!");
-            return false;
+            console.log('error submit!!')
+            return false
           }
-        });
+        })
+
+        //fastadmin登录
+        /*this.loading = true;
+       var that = this;
+       this.$refs.loginForm.validate((valid) => {
+         if (valid) {
+           return request({
+             url: "/index/vuelogin",
+             method: "post",
+             data: {
+               username: this.loginForm.username,
+               password: this.loginForm.password,
+               __token__: that.accessToken,
+             },
+           })
+             .then((response) => {
+               // console.warn("...", response);
+               if (response.code === 1) {
+                 Message({
+                   message: response.msg,
+                   type: "success",
+                   duration: 5 * 1000,
+                 });
+                 // that.$router.push({ path: "/" , query: this.otherQuery});
+                 console.log(this.redirect)
+                 this.$router.push({path: this.redirect || '/'})
+                 // this.$router.push({path: "aaaaa"})
+               } else {
+                 //  提示用户 错误信息
+                 Message({
+                   message: response.msg,
+                   type: "error",
+                   duration: 5 * 1000,
+                 });
+               }
+               this.loading = false;
+             })
+             .catch((err) => {
+               this.loading = false;
+
+               console.warn(err);
+             });
+         } else {
+           this.loading = false;
+
+           console.log("error submit!!");
+           return false;
+         }
+       });*/
       },
     },
   };
